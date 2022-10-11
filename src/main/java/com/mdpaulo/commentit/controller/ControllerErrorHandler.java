@@ -1,6 +1,7 @@
 package com.mdpaulo.commentit.controller;
 
 import com.mdpaulo.commentit.domain.exceptions.CommentItException;
+import com.mdpaulo.commentit.domain.exceptions.CommentItNotFoundException;
 import com.mdpaulo.commentit.domain.exceptions.ResponseErrorTemplate;
 import java.time.Instant;
 import javax.servlet.http.HttpServletRequest;
@@ -17,5 +18,11 @@ public class ControllerErrorHandler {
         HttpStatus status = error.getResponseCode() != null ? HttpStatus.valueOf(error.getResponseCode()) : HttpStatus.BAD_REQUEST;
         ResponseErrorTemplate responseError = new ResponseErrorTemplate(Instant.now(), request.getRequestURI(), error.getMessage());
         return ResponseEntity.status(status).body(responseError);
+    }
+
+    @ExceptionHandler(CommentItNotFoundException.class)
+    public ResponseEntity<ResponseErrorTemplate> handleCustomNotFoundException(CommentItException error, HttpServletRequest request){
+        ResponseErrorTemplate responseError = new ResponseErrorTemplate(Instant.now(), request.getRequestURI(), error.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError);
     }
 }

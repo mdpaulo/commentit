@@ -1,6 +1,7 @@
 package com.mdpaulo.commentit.controller;
 
 import com.mdpaulo.commentit.domain.models.User;
+import com.mdpaulo.commentit.dto.UserDTO;
 import com.mdpaulo.commentit.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,15 @@ public class UserController {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok().body(service.findAll());
+    public ResponseEntity<List<UserDTO>> findAll(){
+        return ResponseEntity.ok().body(service.findAll()
+                .stream()
+                .map(UserDTO::new)
+                .toList());
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable @NonNull String id){
-        return ResponseEntity.ok().body(service.findById(id));
+    public ResponseEntity<UserDTO> findById(@PathVariable @NonNull String id){
+        return ResponseEntity.ok().body(new UserDTO(service.findById(id)));
     }
 }
