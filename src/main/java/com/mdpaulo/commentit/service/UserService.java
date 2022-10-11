@@ -23,4 +23,8 @@ public class UserService {
         }
         return repo.findById(id).orElseThrow(() -> new CommentItException(500, "failed to get user with id: "+id));
     }
+
+    public User save(User user){
+        return repo.insert(user);
+    }
 }
