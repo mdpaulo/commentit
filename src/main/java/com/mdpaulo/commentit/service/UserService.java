@@ -26,6 +26,11 @@ public class UserService {
         return repo.insert(user);
     }
 
+    public User update(User user){
+        this.validateUser(user.getId());
+        return repo.save(user);
+    }
+
     public void deleteById(String id){
         this.validateUser(id);
         repo.deleteById(id);

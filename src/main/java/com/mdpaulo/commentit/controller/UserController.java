@@ -1,6 +1,8 @@
 package com.mdpaulo.commentit.controller;
 
+import com.mdpaulo.commentit.domain.models.User;
 import com.mdpaulo.commentit.dto.CreateUserDTO;
+import com.mdpaulo.commentit.dto.UpdateUserDTO;
 import com.mdpaulo.commentit.dto.UserDTO;
 import com.mdpaulo.commentit.service.UserService;
 import java.net.URI;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +47,14 @@ public class UserController {
                 .buildAndExpand(service.save(newUser.generateModel()).getId())
                 .toUri();
         return  ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable @NonNull String id, @RequestBody @NonNull UpdateUserDTO user){
+        User userToUpdate= user.generateModel();
+        userToUpdate.setId(id);
+        service.update(userToUpdate);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value = "/{id}")
