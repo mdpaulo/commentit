@@ -1,4 +1,4 @@
-package com.mdpaulo.commentit.dto;
+package com.mdpaulo.commentit.domain.dto;
 
 import com.mdpaulo.commentit.domain.models.User;
 

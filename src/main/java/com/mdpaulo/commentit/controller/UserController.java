@@ -1,9 +1,9 @@
 package com.mdpaulo.commentit.controller;
 
 import com.mdpaulo.commentit.domain.models.User;
-import com.mdpaulo.commentit.dto.CreateUserDTO;
-import com.mdpaulo.commentit.dto.UpdateUserDTO;
-import com.mdpaulo.commentit.dto.UserDTO;
+import com.mdpaulo.commentit.domain.dto.CreateUserDTO;
+import com.mdpaulo.commentit.domain.dto.UpdateUserDTO;
+import com.mdpaulo.commentit.domain.dto.UserDTO;
 import com.mdpaulo.commentit.service.UserService;
 import java.net.URI;
 import java.util.List;
