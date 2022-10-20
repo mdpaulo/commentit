@@ -1,5 +1,6 @@
 package com.mdpaulo.commentit.controller;
 
+import com.mdpaulo.commentit.domain.dto.PostDTO;
 import com.mdpaulo.commentit.domain.models.User;
 import com.mdpaulo.commentit.domain.dto.CreateUserDTO;
 import com.mdpaulo.commentit.domain.dto.UpdateUserDTO;
@@ -61,5 +62,11 @@ public class UserController {
     public ResponseEntity<Void> deleteById(@PathVariable @NonNull String id){
         service.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<PostDTO>> findUserPosts(@PathVariable @NonNull String id){
+        return ResponseEntity.ok().body(service.findUserPosts(id).stream()
+                .map(PostDTO::new).toList());
     }
 }

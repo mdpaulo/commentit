@@ -2,6 +2,7 @@ package com.mdpaulo.commentit.service;
 
 import com.mdpaulo.commentit.domain.exceptions.CommentItException;
 import com.mdpaulo.commentit.domain.exceptions.CommentItNotFoundException;
+import com.mdpaulo.commentit.domain.models.Post;
 import com.mdpaulo.commentit.domain.models.User;
 import com.mdpaulo.commentit.repository.UserRepository;
 import java.util.List;
@@ -19,7 +20,7 @@ public class UserService {
 
     public User findById(String id){
         this.validateUser(id);
-        return repo.findById(id).orElseThrow(() -> new CommentItException(500, "failed to get user with id: "+id));
+        return repo.findById(id).orElseThrow(() -> new CommentItException(500, "Failed to get user with id: "+id));
     }
 
     public User save(User user){
@@ -34,6 +35,11 @@ public class UserService {
     public void deleteById(String id){
         this.validateUser(id);
         repo.deleteById(id);
+    }
+
+    public List<Post> findUserPosts(String id){
+        User user = this.findById(id);
+        return user.getPosts();
     }
 
     private void validateUser(String id){
