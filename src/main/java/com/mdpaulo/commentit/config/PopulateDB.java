@@ -1,6 +1,7 @@
 package com.mdpaulo.commentit.config;
 
 import com.mdpaulo.commentit.domain.models.Author;
+import com.mdpaulo.commentit.domain.models.Comment;
 import com.mdpaulo.commentit.domain.models.Post;
 import com.mdpaulo.commentit.domain.models.User;
 import com.mdpaulo.commentit.repository.CommentRepository;
@@ -43,6 +44,18 @@ public class PopulateDB implements CommandLineRunner {
         postRepository.saveAll(List.of(post1,post2));
 
         maria.getPosts().addAll(List.of(post1,post2));
+
         userRepository.save(maria);
+
+        Comment comment1 = new Comment(null,"Você deveria ter vergonha", Instant.now(), new Author(alex));
+        Comment comment2 = new Comment(null,"Me liga", Instant.now(), new Author(bob));
+        Comment comment3 = new Comment(null, "Quanto?", Instant.now(), new Author(bob));
+
+        commentRepository.saveAll(List.of(comment1,comment2,comment3));
+
+        post1.getComments().add(comment2);
+        post2.getComments().addAll(List.of(comment1,comment3));
+
+        postRepository.saveAll(List.of(post1,post2));
     }
 }

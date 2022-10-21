@@ -4,48 +4,42 @@ import com.mdpaulo.commentit.domain.exceptions.CommentItException;
 import com.mdpaulo.commentit.domain.exceptions.CommentItNotFoundException;
 import com.mdpaulo.commentit.domain.models.Comment;
 import com.mdpaulo.commentit.domain.models.Post;
-import com.mdpaulo.commentit.domain.models.User;
-import com.mdpaulo.commentit.repository.PostRepository;
+import com.mdpaulo.commentit.repository.CommentRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PostService {
+public class CommentService {
     @Autowired
-    private PostRepository repo;
+    private CommentRepository repo;
 
-    public List<Post> findAll(){
+    public List<Comment> findAll(){
         return repo.findAll();
     }
 
-    public Post findById(String id){
-        this.validatePost(id);
+    public Comment findById(String id){
+        this.validateComment(id);
         return repo.findById(id).orElseThrow(() -> new CommentItException(500, "Failed to get post with id: "+id));
     }
 
-    public List<Comment> findPostsComments(String id){
-        Post post = this.findById(id);
-        return post.getComments();
+    public Comment save(Comment comment){
+        return repo.insert(comment);
     }
 
-    public Post save(Post post){
-        return repo.insert(post);
-    }
-
-    public Post update(Post post){
-        this.validatePost(post.getId());
-        return repo.save(post);
+    public Comment update(Comment comment){
+        this.validateComment(comment.getId());
+        return repo.save(comment);
     }
 
     public void deleteById(String id){
-        this.validatePost(id);
+        this.validateComment(id);
         repo.deleteById(id);
     }
 
-    private void validatePost(String id){
+    private void validateComment(String id){
         if (!repo.existsById(id)){
-            throw new CommentItNotFoundException(404, "Post with id "+id+" not found");
+            throw new CommentItNotFoundException(404, "Comment with id "+id+" not found");
         }
     }
 }
