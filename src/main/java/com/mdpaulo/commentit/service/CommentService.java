@@ -3,7 +3,6 @@ package com.mdpaulo.commentit.service;
 import com.mdpaulo.commentit.domain.exceptions.CommentItException;
 import com.mdpaulo.commentit.domain.exceptions.CommentItNotFoundException;
 import com.mdpaulo.commentit.domain.models.Comment;
-import com.mdpaulo.commentit.domain.models.Post;
 import com.mdpaulo.commentit.repository.CommentRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

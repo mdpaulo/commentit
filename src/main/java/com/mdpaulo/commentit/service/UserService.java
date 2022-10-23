@@ -37,7 +37,7 @@ public class UserService {
         repo.deleteById(id);
     }
 
-    public List<Post> findUserPosts(String id){
+    public List<Post> findPosts(String id){
         User user = this.findById(id);
         return user.getPosts();
     }

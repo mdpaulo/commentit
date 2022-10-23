@@ -4,7 +4,6 @@ import com.mdpaulo.commentit.domain.exceptions.CommentItException;
 import com.mdpaulo.commentit.domain.exceptions.CommentItNotFoundException;
 import com.mdpaulo.commentit.domain.models.Comment;
 import com.mdpaulo.commentit.domain.models.Post;
-import com.mdpaulo.commentit.domain.models.User;
 import com.mdpaulo.commentit.repository.PostRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,11 @@ public class PostService {
         return repo.findById(id).orElseThrow(() -> new CommentItException(500, "Failed to get post with id: "+id));
     }
 
-    public List<Comment> findPostsComments(String id){
+    public List<Post> findByTitle(String title){
+        return repo.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<Comment> findComments(String id){
         Post post = this.findById(id);
         return post.getComments();
     }

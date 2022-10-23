@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -29,5 +30,12 @@ public class PostController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<PostDTO> findById(@PathVariable @NonNull String id){
         return ResponseEntity.ok().body(new PostDTO(service.findById(id)));
+    }
+
+    @GetMapping(value = "/title")
+    public ResponseEntity<List<PostDTO>> findByTitle(@RequestParam(value = "text", defaultValue = "") @NonNull String text){
+        return ResponseEntity.ok().body(service.findByTitle(text).stream()
+                .map(PostDTO::new)
+                .toList());
     }
 }
