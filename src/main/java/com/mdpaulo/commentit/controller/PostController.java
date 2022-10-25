@@ -33,8 +33,15 @@ public class PostController {
     }
 
     @GetMapping(value = "/title")
-    public ResponseEntity<List<PostDTO>> findByTitle(@RequestParam(value = "text", defaultValue = "") @NonNull String text){
-        return ResponseEntity.ok().body(service.findByTitle(text).stream()
+    public ResponseEntity<List<PostDTO>> findByTitle(@RequestParam(value = "text", defaultValue = "") @NonNull String title){
+        return ResponseEntity.ok().body(service.findByTitle(title).stream()
+                .map(PostDTO::new)
+                .toList());
+    }
+
+    @GetMapping(value = "/author")
+    public ResponseEntity<List<PostDTO>> findByAuthorName(@RequestParam(value = "name", defaultValue = "") @NonNull String name){
+        return ResponseEntity.ok().body(service.findByAuthorName(name).stream()
                 .map(PostDTO::new)
                 .toList());
     }

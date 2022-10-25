@@ -27,6 +27,10 @@ public class PostService {
         return repo.findByTitleContainingIgnoreCase(title);
     }
 
+    public List<Post> findByAuthorName(String name){
+        return repo.findByAuthorName(name);
+    }
+
     public List<Comment> findComments(String id){
         Post post = this.findById(id);
         return post.getComments();
